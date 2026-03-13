@@ -1,0 +1,21 @@
+{
+  "name": "projectc2",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "projectc2": "dist/cli.js"
+  },
+  "scripts": {
+    "dev": "tsx src/cli.ts",
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.8.2",
+    "vitest": "^3.1.1"
+  }
+}
