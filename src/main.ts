@@ -1,12 +1,15 @@
-#!/usr/bin/env node
 import { Command } from "commander";
+import { rps } from "./main-rps.js";
 
-export function main(args: string[]): {
+export type MainOutput = {
   exitCode: number;
   output: string;
-} {
+};
+
+export function main(args: string[]): MainOutput {
   const program = new Command();
   let output = "";
+  let exitCode = 0;
 
   program
     .name("projectc2")
@@ -22,12 +25,16 @@ export function main(args: string[]): {
     });
 
   program
-    .command("rps <move>")
-    .description("Play rock-paper-scissors against the computer");
+    .command("rps")
+    .description("Play rock-paper-scissors against the computer")
+    .argument("move", "game move (rock, paper, scissors)")
+    .action((moveInput) => {
+      ({ exitCode, output } = rps(moveInput));
+    });
 
   try {
     program.parse(args, { from: "user" });
-    return { exitCode: 0, output: output.trimEnd() };
+    return { exitCode, output: output.trimEnd() };
   } catch (error) {
     const exitCode =
       typeof error === "object" &&
@@ -40,9 +47,3 @@ export function main(args: string[]): {
     return { exitCode, output: output.trimEnd() };
   }
 }
-
-const result = main(process.argv.slice(2));
-if (result.output.length > 0) {
-  process.stdout.write(`${result.output}\n`);
-}
-process.exit(result.exitCode);
