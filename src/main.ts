@@ -29,9 +29,7 @@ export function main(args: string[]): MainOutput {
     .description("Play rock-paper-scissors against the computer")
     .argument("move", "game move (rock, paper, scissors)")
     .action((moveInput) => {
-      console.log("input");
       ({ exitCode, output } = rps(moveInput));
-      console.log("output");
     });
 
   try {
