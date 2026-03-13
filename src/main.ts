@@ -29,20 +29,23 @@ export function main(args: string[]): MainOutput {
     .description("Play rock-paper-scissors against the computer")
     .argument("move", "game move (rock, paper, scissors)")
     .action((moveInput) => {
+      console.log("input");
       ({ exitCode, output } = rps(moveInput));
+      console.log("output");
     });
 
   try {
     program.parse(args, { from: "user" });
     return { exitCode, output: output.trimEnd() };
   } catch (error) {
-    const exitCode =
+    exitCode =
       typeof error === "object" &&
       error !== null &&
       "exitCode" in error &&
       typeof (error as { exitCode?: unknown }).exitCode === "number"
         ? (error as { exitCode: number }).exitCode
         : 1;
+    output = `${error}`;
 
     return { exitCode, output: output.trimEnd() };
   }
