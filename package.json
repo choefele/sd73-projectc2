@@ -4,13 +4,18 @@
   "private": true,
   "type": "module",
   "bin": {
-    "projectc2": "dist/cli.js"
+    "projectc2": "dist/main.js"
   },
   "scripts": {
-    "dev": "tsx src/cli.ts",
+    "dev": "tsx src/main.ts",
+    "projectc2": "tsx src/main.ts",
+    "projectc2:rps": "tsx src/main.ts rps",
     "build": "tsc -p tsconfig.json",
     "test": "vitest run",
     "test:watch": "vitest"
+  },
+  "dependencies": {
+    "commander": "^12.1.0"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
