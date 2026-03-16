@@ -27,7 +27,7 @@ export function main(args: string[]): MainOutput {
 
   program
     .command("rps")
-    .description("Play rock-paper-scissors against the computer")
+    .description("play rock-paper-scissors against the computer")
     .argument("move", "game move (rock, paper, scissors)")
     .action((move) => {
       ({ exitCode, output } = rps(move));
@@ -35,7 +35,7 @@ export function main(args: string[]): MainOutput {
 
   program
     .command("pl")
-    .description("Translate English to Pig Latin")
+    .description("translate English to Pig Latin")
     .argument("text", "text to translate")
     .action((text) => {
       ({ exitCode, output } = pl(text));
