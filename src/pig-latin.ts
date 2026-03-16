@@ -24,7 +24,10 @@ function translateTwoConsonants(s: string): string {
 }
 
 function translateVowel(s: string): string {
-  return "";
+  if (s.length === 0) return "";
+
+  const input = s.trim().toLowerCase();
+  return input.concat("way");
 }
 
 export function translate(s: string): string {

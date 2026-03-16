@@ -36,4 +36,14 @@ describe("translate helpers", () => {
       expect(translated).toBe(expectedOutput[i]);
     });
   });
+
+  it("translates vowel", () => {
+    const input = ["Awesome", "a", "open", ""];
+    const expectedOutput = ["awesomeway", "away", "openway", ""];
+
+    input.forEach((s, i) => {
+      const translated = exportedForTesting.translateVowel(s);
+      expect(translated).toBe(expectedOutput[i]);
+    });
+  });
 });
