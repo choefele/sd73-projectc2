@@ -1,4 +1,4 @@
-import { Command } from "commander";
+import { Command, CommanderError } from "commander";
 import { rps } from "./main-rps.js";
 import { pl } from "./main-pl.js";
 
@@ -45,23 +45,14 @@ export function main(args: string[]): MainOutput {
     program.parse(args, { from: "user" });
     return { exitCode, output: output.trimEnd() };
   } catch (error) {
-    const errObj = error as { exitCode?: unknown; code?: unknown };
-    const isHelp =
-      typeof errObj === "object" &&
-      errObj !== null &&
-      errObj.code === "commander.helpDisplayed";
-
-    exitCode =
-      typeof errObj === "object" &&
-      errObj !== null &&
-      typeof errObj.exitCode === "number"
-        ? errObj.exitCode
-        : 1;
-
-    if (isHelp) {
+    if (
+      error instanceof CommanderError &&
+      error.code === "commander.helpDisplayed"
+    ) {
       return { exitCode: 0, output: output.trimEnd() };
     }
 
+    exitCode = error instanceof CommanderError ? error.exitCode : 1;
     const trimmedOutput = output.trimEnd();
     output = trimmedOutput.length > 0 ? trimmedOutput : `${error}`;
 
