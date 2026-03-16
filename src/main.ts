@@ -1,6 +1,7 @@
 import { Command, CommanderError } from "commander";
 import { rps } from "./main-rps.js";
 import { pl } from "./main-pl.js";
+import { cc } from "./main-cc.js";
 
 export type MainOutput = {
   exitCode: number;
@@ -39,6 +40,15 @@ export function main(args: string[]): MainOutput {
     .argument("text", "text to translate")
     .action((text) => {
       ({ exitCode, output } = pl(text));
+    });
+
+  program
+    .command("cc")
+    .description("encrypt using Caesar Cipher")
+    .argument("text", "text to encyrpt")
+    .argument("shift", "amount to shift left or right")
+    .action((text, shift) => {
+      ({ exitCode, output } = cc(text, shift));
     });
 
   try {

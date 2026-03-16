@@ -12,10 +12,16 @@ describe("main", () => {
     expect(result.exitCode).toBe(0);
   });
 
+  it("accepts the cc subcommand", () => {
+    const result = main(["cc", "Test a ba c", "3"]);
+    expect(result.exitCode).toBe(0);
+  });
+
   it("returns help output with exit code 0", () => {
     const result = main(["--help"]);
     expect(result.exitCode).toBe(0);
     expect(result.output).toContain("rps");
     expect(result.output).toContain("pl");
+    expect(result.output).toContain("cc");
   });
 });
