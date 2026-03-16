@@ -1,16 +1,18 @@
+function capitalize(template: string, s: string): string {
+  const startsWithUppercase = template[0] === template[0]?.toUpperCase();
+  const capitalized = startsWithUppercase
+    ? s[0]?.toUpperCase() + s.slice(1)
+    : s;
+
+  return capitalized;
+}
+
 function translateConsonantVowel(s: string): string {
   if (s.length === 0) return "";
 
   const input = s.trim().toLowerCase();
   const letter = input.slice(0, 1);
-  const translated = input.slice(1).concat(letter).concat("ay");
-
-  const startsWithUppercase = s[0] === s[0]?.toUpperCase();
-  const capitalized = startsWithUppercase
-    ? translated[0]?.toUpperCase() + translated.slice(1)
-    : translated;
-
-  return capitalized;
+  return input.slice(1).concat(letter).concat("ay");
 }
 
 function translateTwoConsonants(s: string): string {
@@ -18,14 +20,7 @@ function translateTwoConsonants(s: string): string {
 
   const input = s.trim().toLowerCase();
   const letter = input.slice(0, 2);
-  const translated = input.slice(2).concat(letter).concat("ay");
-
-  const startsWithUppercase = s[0] === s[0]?.toUpperCase();
-  const capitalized = startsWithUppercase
-    ? translated[0]?.toUpperCase() + translated.slice(1)
-    : translated;
-
-  return capitalized;
+  return input.slice(2).concat(letter).concat("ay");
 }
 
 function translateVowel(s: string): string {
@@ -37,6 +32,7 @@ export function translate(s: string): string {
 }
 
 export const exportedForTesting = {
+  capitalize,
   translateConsonantVowel,
   translateTwoConsonants,
   translateVowel,
