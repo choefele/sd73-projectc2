@@ -6,4 +6,16 @@ describe("main", () => {
     const result = main(["rps", "Rock"]);
     expect(result.exitCode).toBe(0);
   });
+
+  it("accepts the pl subcommand", () => {
+    const result = main(["pl", "Test a ba c"]);
+    expect(result.exitCode).toBe(0);
+  });
+
+  it("returns help output with exit code 0", () => {
+    const result = main(["--help"]);
+    expect(result.exitCode).toBe(0);
+    expect(result.output).toContain("rps");
+    expect(result.output).toContain("pl");
+  });
 });

@@ -1,5 +1,6 @@
 import { Command } from "commander";
 import { rps } from "./main-rps.js";
+import { pl } from "./main-pl.js";
 
 export type MainOutput = {
   exitCode: number;
@@ -28,23 +29,42 @@ export function main(args: string[]): MainOutput {
     .command("rps")
     .description("Play rock-paper-scissors against the computer")
     .argument("move", "game move (rock, paper, scissors)")
-    .action((moveInput) => {
-      ({ exitCode, output } = rps(moveInput));
+    .action((move) => {
+      ({ exitCode, output } = rps(move));
+    });
+
+  program
+    .command("pl")
+    .description("Translate English to Pig Latin")
+    .argument("text", "text to translate")
+    .action((text) => {
+      ({ exitCode, output } = pl(text));
     });
 
   try {
     program.parse(args, { from: "user" });
     return { exitCode, output: output.trimEnd() };
   } catch (error) {
-    exitCode =
-      typeof error === "object" &&
-      error !== null &&
-      "exitCode" in error &&
-      typeof (error as { exitCode?: unknown }).exitCode === "number"
-        ? (error as { exitCode: number }).exitCode
-        : 1;
-    output = `${error}`;
+    const errObj = error as { exitCode?: unknown; code?: unknown };
+    const isHelp =
+      typeof errObj === "object" &&
+      errObj !== null &&
+      errObj.code === "commander.helpDisplayed";
 
-    return { exitCode, output: output.trimEnd() };
+    exitCode =
+      typeof errObj === "object" &&
+      errObj !== null &&
+      typeof errObj.exitCode === "number"
+        ? errObj.exitCode
+        : 1;
+
+    if (isHelp) {
+      return { exitCode: 0, output: output.trimEnd() };
+    }
+
+    const trimmedOutput = output.trimEnd();
+    output = trimmedOutput.length > 0 ? trimmedOutput : `${error}`;
+
+    return { exitCode, output };
   }
 }
