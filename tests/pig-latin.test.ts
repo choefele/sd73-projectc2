@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { exportedForTesting } from "../src/pig-latin.js";
+import { exportedForTesting, translate } from "../src/pig-latin.js";
 
 describe("translate helpers", () => {
   it("capitalizes word", () => {
@@ -29,7 +29,7 @@ describe("translate helpers", () => {
 
   it("translates two consonants", () => {
     const input = ["Child", "black", "ll", "l", ""];
-    const expectedOutput = ["ildchay", "ackblay", "llay", "", ""];
+    const expectedOutput = ["ildchay", "ackblay", "llay", "l", ""];
 
     input.forEach((s, i) => {
       const translated = exportedForTesting.translateTwoConsonants(s);
@@ -38,12 +38,20 @@ describe("translate helpers", () => {
   });
 
   it("translates vowel", () => {
-    const input = ["Awesome", "a", "open", ""];
-    const expectedOutput = ["awesomeway", "away", "openway", ""];
+    const input = ["Awesome", "is", "a", "open", ""];
+    const expectedOutput = ["awesomeway", "isway", "away", "openway", ""];
 
     input.forEach((s, i) => {
       const translated = exportedForTesting.translateVowel(s);
       expect(translated).toBe(expectedOutput[i]);
     });
+  });
+});
+
+describe("translate", () => {
+  it("translates correctly", () => {
+    expect(translate("Pig Latin is hard to speak")).toBe(
+      "Igpay Atinlay isway ardhay otay eakspay",
+    );
   });
 });

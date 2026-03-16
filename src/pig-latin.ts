@@ -16,7 +16,7 @@ function translateConsonantVowel(s: string): string {
 }
 
 function translateTwoConsonants(s: string): string {
-  if (s.length < 2) return "";
+  if (s.length < 2) return s;
 
   const input = s.trim().toLowerCase();
   const letter = input.slice(0, 2);
@@ -31,7 +31,28 @@ function translateVowel(s: string): string {
 }
 
 export function translate(s: string): string {
-  return "";
+  const words = s.split(" ");
+  const wordsTranslated = words
+    .map((w) => w.trim())
+    .map((w) => {
+      let translated: string;
+      const isVowel = (s: string, i: number) =>
+        ["a", "e", "i", "o", "u"].includes(s[i] ?? "");
+
+      if (isVowel(w, 0)) {
+        translated = translateVowel(w);
+      } else {
+        const twoConsonants = w.length > 1 && !isVowel(w, 1);
+        if (twoConsonants) {
+          translated = translateTwoConsonants(w);
+        } else {
+          translated = translateConsonantVowel(w);
+        }
+      }
+
+      return capitalize(w, translated);
+    });
+  return wordsTranslated.join(" ");
 }
 
 export const exportedForTesting = {
