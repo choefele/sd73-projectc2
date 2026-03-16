@@ -14,7 +14,18 @@ function translateConsonantVowel(s: string): string {
 }
 
 function translateTwoConsonants(s: string): string {
-  return "";
+  if (s.length < 2) return "";
+
+  const input = s.trim().toLowerCase();
+  const letter = input.slice(0, 2);
+  const translated = input.slice(2).concat(letter).concat("ay");
+
+  const startsWithUppercase = s[0] === s[0]?.toUpperCase();
+  const capitalized = startsWithUppercase
+    ? translated[0]?.toUpperCase() + translated.slice(1)
+    : translated;
+
+  return capitalized;
 }
 
 function translateVowel(s: string): string {

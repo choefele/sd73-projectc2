@@ -18,4 +18,14 @@ describe("translate helpers", () => {
       expect(translated).toBe(expectedOutput[i]);
     });
   });
+
+  it("translates two consonants", () => {
+    const input = ["Child", "black", "ll", "l", ""];
+    const expectedOutput = ["Ildchay", "ackblay", "llay", "", ""];
+
+    input.forEach((s, i) => {
+      const translated = exportedForTesting.translateTwoConsonants(s);
+      expect(translated).toBe(expectedOutput[i]);
+    });
+  });
 });
